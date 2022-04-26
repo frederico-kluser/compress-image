@@ -27,10 +27,27 @@ const getFileName = (file) => {
 
 const replaceAll = (str, find, replace) => str.replace(new RegExp(find, 'g'), replace);
 
+const fixUrlName = (site) => {
+  let urlBase = 'https://onepeloton.';
+  let url = '';
+
+  if (site.indexOf('(') === 0) {
+    url = site.substring(1, site.length);
+    const closeParenthesisIndex = url.indexOf(')');
+    url = url.replace(')', '/');
+  } else {
+    urlBase += 'com/';
+    url = site;
+  }
+
+  return `${urlBase}${replaceAll(url, ' ', '/')}`; 
+};
+
 module.exports = {
   getDownloadedChromeSiteUrl,
   storageGetter,
   storageSetter,
   getFileName,
   replaceAll,
+  fixUrlName,
 };

@@ -3,7 +3,7 @@ const { findCompressedVersion, compressFile } = require('./src/utils/compressFil
 const { copyAllSiteImages } = require('./src/utils/copyFiles');
 const ENUMS = require('./src/utils/enums');
 const generateExcel = require('./src/utils/excel');
-const { replaceAll, getFileName } = require('./src/utils/general');
+const { getFileName, fixUrlName } = require('./src/utils/general');
 const { getFileSize } = require('./src/utils/getFilesInfo');
 
 const init = async () => {
@@ -15,7 +15,7 @@ const init = async () => {
 	for await (const site of sitesFomatted) {
 		const images = sites[site];
 		let convertedItems = 0;
-		const fullSizePath = () => `https://onepeloton.com/${replaceAll(site, ' ', '/')}`;
+		const fullSizePath = () => fixUrlName(site);
 		proccess[fullSizePath()] = `${convertedItems}/${images.length - 1}`;
 		excel[fullSizePath()] = {};
 
